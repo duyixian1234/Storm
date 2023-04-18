@@ -1,6 +1,6 @@
 import { For } from "solid-js";
-import { RequestHeader } from "./../types";
 import { headers, setHeaders } from "./../context";
+import { RequestHeader } from "./../types";
 import { RequestHeaderInput } from "./RequestHeaderInput";
 import "./Window.css";
 

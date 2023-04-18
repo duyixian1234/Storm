@@ -11,5 +11,5 @@ export interface RequestHeader {
 export interface Response {
   status: number;
   headers: Headers;
-  body: string;
+  body: ArrayBuffer;
 }

@@ -1,15 +1,16 @@
-import { response } from "../context";
-import { createEffect } from "solid-js";
-import "./Window.css";
-import "prismjs/themes/prism.css";
+import { Base64 } from "js-base64";
 import Prism from "prismjs";
+import "prismjs/themes/prism.css";
+import { response } from "../context";
+import "./Window.css";
 
-import { Show } from "solid-js";
+import { Match, Show, Switch, createEffect } from "solid-js";
 
 export function ResponseDetails() {
   createEffect(() => {
     Prism.highlightAll();
-  }, [response()]);
+    [response()];
+  });
   return (
     <div>
       <Show when={response()} fallback={<div></div>}>
@@ -24,9 +25,28 @@ export function ResponseDetails() {
           ))}
         </ul>
         <h4>响应体:</h4>
-        <pre>
-          <code class={"language-json"}>{response().body}</code>
-        </pre>
+        <Switch>
+          <Match
+            when={response().headers.get("Content-Type")?.includes("json")}
+          >
+            <pre>
+              <code class={"language-json"}>
+                {new TextDecoder().decode(response().body)}
+              </code>
+            </pre>
+          </Match>
+          <Match
+            when={response().headers.get("Content-Type")?.startsWith("image")}
+          >
+            <img
+              src={`data:${response().headers.get(
+                "content-type"
+              )};base64, ${Base64.fromUint8Array(
+                new Uint8Array(response().body as ArrayBuffer)
+              )}`}
+            />
+          </Match>
+        </Switch>
       </Show>
     </div>
   );

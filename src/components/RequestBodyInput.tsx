@@ -1,4 +1,4 @@
-import { setBody, body } from "./../context";
+import { body, setBody } from "./../context";
 import "./Window.css";
 
 export function RequestBodyInput() {

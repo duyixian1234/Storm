@@ -1,43 +1,44 @@
-import { RequestMethod } from "../types";
-import "./Window.css";
 import {
-  headers,
   body,
-  setLoading,
-  setError,
-  url,
-  method,
-  setResponse,
-  setMethod,
-  setUrl,
-  loading,
   defaultResponse,
+  headers,
+  loading,
+  method,
+  setError,
+  setLoading,
+  setMethod,
+  setResponse,
+  setUrl,
+  url,
 } from "../context";
-import { RequestHeaderList } from "./RequestHeaderList";
+import { RequestMethod } from "../types";
 import { RequestBodyInput } from "./RequestBodyInput";
+import { RequestHeaderList } from "./RequestHeaderList";
+import "./Window.css";
 
 export function Request() {
   const handleSubmit = () => {
     setLoading(true);
     setError("");
     setResponse(defaultResponse);
-
-    console.log(url(), method(), headers(), body());
+    let text: string;
+    const requestHeaders = headers().reduce((obj, header) => {
+      if (header.key) {
+        obj[header.key] = header.value;
+      }
+      return obj;
+    }, {} as Record<string, string>);
+    console.log(url(), method(), requestHeaders, body());
     fetch(url(), {
       method: method(),
-      headers: headers().reduce((obj, header) => {
-        if (header.key) {
-          obj[header.key] = header.value;
-        }
-        return obj;
-      }, {} as Record<string, string>),
+      headers: requestHeaders,
       body: method() === RequestMethod.GET ? null : body(),
     })
       .then(async (response) => {
         setResponse({
           status: response.status,
           headers: response.headers,
-          body: await response.text(),
+          body: await response.arrayBuffer(),
         });
       })
       .catch((err) => {

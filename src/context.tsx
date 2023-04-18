@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { RequestMethod, RequestHeader, Response } from "./types";
+import { RequestHeader, RequestMethod, Response } from "./types";
 
 export const [url, setUrl] = createSignal<string>("https://httpbin.org/get");
 export const [method, setMethod] = createSignal(RequestMethod.GET);
@@ -12,7 +12,7 @@ export const [body, setBody] = createSignal("");
 export const defaultResponse = {
   status: 200,
   headers: new Headers(),
-  body: "",
+  body: new ArrayBuffer(0),
 };
 export const [response, setResponse] = createSignal<Response>(defaultResponse);
 export const [loading, setLoading] = createSignal(false);

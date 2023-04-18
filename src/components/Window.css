@@ -79,6 +79,10 @@
   height: 50vh;
 }
 
+.response img{
+  max-height: 1000px;
+}
+
 @media (max-width: 1024px) {
   .container {
     flex-direction: column;
