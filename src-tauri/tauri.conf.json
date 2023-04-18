@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "Storm",
-    "version": "0.0.0"
+    "productName": "storm",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -27,7 +27,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "cn.duyixian.www",
       "targets": "all"
     },
     "security": {
@@ -40,9 +40,9 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Storm",
-        "width": 800,
-        "height": 600
+        "title": "Storm Client",
+        "width": 1024,
+        "height": 768
       }
     ]
   }

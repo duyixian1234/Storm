@@ -1,0 +1,96 @@
+.container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-width: 90vw;
+}
+
+.request {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-right: 20px;
+  width: 30vw;
+}
+
+.request form {
+  display: flex;
+  flex-direction: column;
+}
+
+.request label {
+  margin-bottom: 10px;
+}
+
+.request header-list {
+  display: block;
+}
+
+.request label input,
+.request label select {
+  margin-left: 10px;
+}
+
+.request h4 {
+  margin: 10px 0;
+}
+
+.request textarea {
+  width: 80%;
+  height: 20vh;
+}
+
+.request button {
+  margin-top: 10px;
+}
+
+.response {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.response h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  width: 60vw;
+}
+
+.response p {
+  margin: 0;
+}
+
+.response ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.response li {
+  margin-bottom: 5px;
+}
+
+.response code {
+  white-space: pre-wrap;
+  width: auto;
+  height: 50vh;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    min-width: auto;
+  }
+
+  .request {
+    margin-right: 0;
+    width: 80vw;
+  }
+
+  .response {
+    width: 80vw;
+  }
+}

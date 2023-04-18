@@ -1,5 +1,5 @@
 {
-  "name": "Storm",
+  "name": "storm",
   "version": "0.0.0",
   "description": "",
   "scripts": {
@@ -11,14 +11,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "solid-js": "^1.7.0",
-    "@tauri-apps/api": "^1.2.0"
+    "@tauri-apps/api": "^1.2.0",
+    "prismjs": "^1.29.0",
+    "solid-js": "^1.7.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^1.2.3",
     "@types/node": "^18.7.10",
+    "@types/prismjs": "^1.26.0",
     "typescript": "^4.9.5",
     "vite": "^4.2.1",
-    "vite-plugin-solid": "^2.5.0",
-    "@tauri-apps/cli": "^1.2.3"
+    "vite-plugin-solid": "^2.5.0"
   }
 }
