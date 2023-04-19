@@ -1,7 +1,7 @@
-import { body, setBody } from "./../context";
-import "./Window.css";
+import { body, setBody } from "../../context";
+import "./request.css";
 
-export function RequestBodyInput() {
+export function BodyEditor() {
   const handleBodyChange = ({
     target: { value },
   }: {
@@ -12,7 +12,6 @@ export function RequestBodyInput() {
 
   return (
     <div>
-      <h4>请求体</h4>
       <textarea value={body()} onInput={handleBodyChange} />
     </div>
   );

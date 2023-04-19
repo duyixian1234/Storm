@@ -8,6 +8,11 @@ export interface RequestHeader {
   key: string;
   value: string;
 }
+
+export interface Query {
+  key: string;
+  value: string;
+}
 export interface Response {
   status: number;
   headers: Headers;

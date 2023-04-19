@@ -1,8 +1,8 @@
 import { Base64 } from "js-base64";
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
-import { response } from "../context";
-import "./Window.css";
+import { response } from "../../context";
+import "./response.css";
 
 import { Match, Show, Switch, createEffect } from "solid-js";
 

@@ -1,0 +1,40 @@
+.response {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.response h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  width: 60vw;
+}
+
+.response p {
+  margin: 0;
+}
+
+.response ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.response li {
+  margin-bottom: 5px;
+}
+
+.response code {
+  white-space: pre-wrap;
+  width: auto;
+  height: 50vh;
+}
+
+.response img {
+  max-height: 1000px;
+}
+
+@media (max-width: 1024px) {
+  .response {
+    width: 80vw;
+  }
+}

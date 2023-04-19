@@ -1,8 +1,8 @@
 import { Show } from "solid-js";
 import "./Window.css";
 import { error, response } from "../context";
-import { Request } from "./Request";
-import { ResponseDetails } from "./ResponseDetails";
+import { Request } from "./request/Request";
+import { ResponseDetails } from "./response/ResponseDetails";
 
 export default function Window() {
   return (

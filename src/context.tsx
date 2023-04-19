@@ -1,11 +1,12 @@
 import { createSignal } from "solid-js";
-import { RequestHeader, RequestMethod, Response } from "./types";
+import { Query, RequestHeader, RequestMethod, Response } from "./types";
 
 export const [url, setUrl] = createSignal<string>("https://httpbin.org/get");
 export const [method, setMethod] = createSignal(RequestMethod.GET);
 export const [headers, setHeaders] = createSignal<RequestHeader[]>([
-  { key: "", value: "" },
-  { key: "", value: "" },
+  { key: "User-Agent", value: "Storm Client" },
+]);
+export const [queries, setQueries] = createSignal<Query[]>([
   { key: "", value: "" },
 ]);
 export const [body, setBody] = createSignal("");
