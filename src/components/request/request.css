@@ -1,13 +1,17 @@
 .request {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  margin-right: 20px;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  width: 48vw;
+  border: #ccc 1px solid;
+  border-radius: 0.5vw;
 }
 
-.request .url-editor  {
+.request .url-editor {
   display: flex;
   justify-content: left;
+  margin-left: 1.5vw;
 }
 
 .request .url-editor > * {
@@ -17,22 +21,25 @@
   height: 40px;
   border-radius: 5px;
 }
-.request textarea {
-  height: 20vh;
+
+.request .url-editor input {
+  border-radius: 5px;
+  width: 30vw;
 }
 
-.tabs {
+.request .tabs {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 }
 
-.tab-indicators {
+.request .tab-indicators {
   display: flex;
   justify-content: left;
+  margin-left: 10px;
 }
 
-.tab-indicators button {
+.request .tab-indicators button {
   background: transparent;
   border: none;
   color: #555;
@@ -41,14 +48,25 @@
   padding: 5px 10px;
 }
 
-.tab-indicators button.active {
+.request .tab-indicators button.active {
   border-bottom: 2px solid #555;
+  margin-left: 1.5vw;
 }
 
-.tab {
+.request .tab {
   border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 10px;
+  margin-left: 1.5vw;
   margin-top: 10px;
+  margin-bottom: 10px;
+  height: 80vh;
+  width: 44vw;
+  overflow: auto;
+}
+
+.request .tab > * {
+  height: inherit;
 }
 
 .headers-editor {
@@ -61,10 +79,12 @@
   justify-content: start;
   align-items: center;
   margin: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .header-input > * {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .queries-editor {
   display: flex;
@@ -76,15 +96,37 @@
   justify-content: start;
   align-items: center;
   margin: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .query-input > * {
-  margin-left: 10px;
+  margin-left: 5px;
+}
+
+.body-input {
+  height: 20vh;
+  width: 40vw;
 }
 
 @media (max-width: 1024px) {
   .request {
     margin-right: 0;
     width: 80vw;
+  }
+
+  .body-input {
+    height: 20vh;
+    width: 70vw;
+  }
+
+  .request .tab {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 30vh;
+    width: 75vw;
   }
 }

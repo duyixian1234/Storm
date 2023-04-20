@@ -1,3 +1,5 @@
+import { AxiosResponseHeaders, RawAxiosResponseHeaders } from "axios";
+
 export enum RequestMethod {
   GET = "GET",
   POST = "POST",
@@ -15,6 +17,6 @@ export interface Query {
 }
 export interface Response {
   status: number;
-  headers: Headers;
+  headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
   body: ArrayBuffer;
 }

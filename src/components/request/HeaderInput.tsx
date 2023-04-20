@@ -47,9 +47,9 @@ export function HeaderInput(props: { header: RequestHeader; index: number }) {
       <input type="text" value={header.key} onInput={handleKeyChange} />
       <span />
       <input type="text" value={header.value} onInput={handleValueChange} />
-      <button onClick={handleDelete}>删除</button>
+      <button onClick={handleDelete}>Del</button>
       {index == headers().length - 1 && (
-        <button onClick={handleAddHeader}>添加</button>
+        <button onClick={handleAddHeader}>Add</button>
       )}
     </div>
   );

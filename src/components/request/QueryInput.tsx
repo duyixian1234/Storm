@@ -47,9 +47,9 @@ export function QueryInput(props: { query: Query; index: number }) {
       <input type="text" value={query.key} onInput={handleKeyChange} />
       <span />
       <input type="text" value={query.value} onInput={handleValueChange} />
-      <button onClick={handleDelete}>删除</button>
+      <button onClick={handleDelete}>Del</button>
       {index == queries().length - 1 && (
-        <button onClick={handleAddQuery}>添加</button>
+        <button onClick={handleAddQuery}>Add</button>
       )}
     </div>
   );

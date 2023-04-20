@@ -1,40 +1,72 @@
 .response {
-  flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  width: 48vw;
+  border: #ccc 1px solid;
+  border-radius: 0.5vw;
 }
 
-.response h2 {
-  margin-top: 0;
+.response .tabs {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  margin-top: 1vw;
+}
+
+.response .tab-indicators {
+  display: flex;
+  justify-content: left;
+  margin-left: 1.5vw;
+}
+
+.response .tab-indicators button {
+  background: transparent;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.response .tab-indicators button.active {
+  border-bottom: 2px solid #555;
+}
+
+.response .tab {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 1.5vw;
+  margin-top: 10px;
   margin-bottom: 10px;
-  width: 60vw;
+  height: 80vh;
+  width: 44vw;
+  overflow: auto;
 }
 
-.response p {
-  margin: 0;
+.status-code {
+  display: flex;
+  justify-content: left;
 }
 
-.response ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.response li {
-  margin-bottom: 5px;
-}
-
-.response code {
-  white-space: pre-wrap;
-  width: auto;
-  height: 50vh;
-}
-
-.response img {
+.response-image {
   max-height: 1000px;
 }
 
 @media (max-width: 1024px) {
   .response {
     width: 80vw;
+  }
+
+  .response .tab {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 30vh;
+    width: 75vw;
   }
 }

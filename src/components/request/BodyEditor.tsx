@@ -12,7 +12,7 @@ export function BodyEditor() {
 
   return (
     <div>
-      <textarea value={body()} onInput={handleBodyChange} />
+      <textarea class="body-input" value={body()} onInput={handleBodyChange} />
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import { createMemo } from "solid-js";
+import axios from "axios";
 import {
   body,
   defaultResponse,
   headers,
   loading,
   method,
-  queries,
+  realUrl,
   setError,
   setLoading,
   setMethod,
@@ -13,11 +13,7 @@ import {
   setUrl,
   url,
 } from "../../context";
-import { Query, RequestMethod } from "../../types";
-
-const realUrl = createMemo(() => {
-  return url() + "?" + toQueryString(queries());
-});
+import { RequestMethod } from "../../types";
 
 export function UrlEditor() {
   const handleSubmit = () => {
@@ -31,20 +27,23 @@ export function UrlEditor() {
       return obj;
     }, {} as Record<string, string>);
     console.log(realUrl(), method(), requestHeaders, body());
-    fetch(realUrl(), {
-      method: method(),
-      headers: requestHeaders,
-      body: method() === RequestMethod.GET ? null : body(),
-    })
+    axios
+      .request({
+        url: realUrl(),
+        method: method(),
+        headers: requestHeaders,
+        data: method() === RequestMethod.GET ? null : body(),
+        responseType: "arraybuffer",
+      })
       .then(async (response) => {
         setResponse({
           status: response.status,
           headers: response.headers,
-          body: await response.arrayBuffer(),
+          body: response.data,
         });
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err);
       })
       .finally(() => setLoading(false));
   };
@@ -65,16 +64,8 @@ export function UrlEditor() {
         onInput={(e) => setUrl(e.target.value)}
       />
       <button onClick={handleSubmit} disabled={loading()}>
-        {loading() ? "正在加载..." : "发送请求"}
+        {loading() ? "Loading..." : "Send"}
       </button>
     </div>
   );
-}
-
-function toQueryString(queries: Query[]): string {
-  const params = new URLSearchParams();
-  queries.forEach((query) => {
-    params.append(query.key, query.value);
-  });
-  return params.toString();
 }

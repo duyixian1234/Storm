@@ -6,9 +6,7 @@ export default function Window() {
   return (
     <div class="container">
       <RequestPage />
-      <div class="response">
-        <ResponsePage />
-      </div>
+      <ResponsePage />
     </div>
   );
 }
