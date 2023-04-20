@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Body, ResponseType, fetch } from "@tauri-apps/api/http";
 import {
   body,
   defaultResponse,
@@ -16,7 +16,7 @@ import {
 import { RequestMethod } from "../../types";
 
 export function UrlEditor() {
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
     setError("");
     setResponse(defaultResponse);
@@ -27,25 +27,23 @@ export function UrlEditor() {
       return obj;
     }, {} as Record<string, string>);
     console.log(realUrl(), method(), requestHeaders, body());
-    axios
-      .request({
-        url: realUrl(),
+    try {
+      const response = await fetch<number[]>(realUrl(), {
         method: method(),
         headers: requestHeaders,
-        data: method() === RequestMethod.GET ? null : body(),
-        responseType: "arraybuffer",
-      })
-      .then(async (response) => {
-        setResponse({
-          status: response.status,
-          headers: response.headers,
-          body: response.data,
-        });
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => setLoading(false));
+        body: method() === RequestMethod.GET ? undefined : Body.text(body()),
+        responseType: ResponseType.Binary,
+      });
+      setResponse({
+        status: response.status,
+        headers: response.headers,
+        body: new Uint8Array(response.data).buffer,
+      });
+    } catch (error) {
+      setError((error as any).toString());
+    } finally{
+      setLoading(false);
+    }
   };
 
   const handleMethodChange = (e: any) => {

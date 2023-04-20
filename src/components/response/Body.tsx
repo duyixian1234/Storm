@@ -1,6 +1,6 @@
 import { Base64 } from "js-base64";
 import { realUrl, response } from "../../context";
-import { Match, Switch, createEffect, createMemo } from "solid-js";
+import { Match, Switch, createMemo } from "solid-js";
 
 const textTypes = new Set([
   "text/plain",
@@ -37,9 +37,6 @@ export function Body() {
   const contentType = createMemo(
     () => response().headers["content-type"]?.toString() || ""
   );
-  createEffect(() => {
-    console.log(Object.keys(response().body), response().body);
-  });
   return (
     <div>
       <Switch>

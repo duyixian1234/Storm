@@ -17,6 +17,6 @@ export interface Query {
 }
 export interface Response {
   status: number;
-  headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
+  headers: Record<string, string>;
   body: ArrayBuffer;
 }
