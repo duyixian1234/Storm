@@ -1,18 +1,21 @@
 import { Base64 } from "js-base64";
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
-import { response } from "../../context";
+import { error, response } from "../../context";
 import "./response.css";
 
 import { Match, Show, Switch, createEffect } from "solid-js";
 
-export function ResponseDetails() {
+export function ResponsePage() {
   createEffect(() => {
     Prism.highlightAll();
     [response()];
   });
   return (
     <div>
+      <Show when={error()}>
+        <p>发生错误: {error()}</p>
+      </Show>
       <Show when={response()} fallback={<div></div>}>
         <h4>状态码</h4>
         <p>{response().status}</p>

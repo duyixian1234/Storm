@@ -1,24 +1,13 @@
 import { createSignal } from "solid-js";
 import { BodyEditor } from "./BodyEditor";
 import { HeadersEditor } from "./HeadersEditor";
-import { UrlEditor } from "./UrlEditor";
-import "./request.css";
 import { QueriesEditor } from "./QueriesEditor";
 
 type Tab = "headers" | "body" | "queries";
 
 const [selectedTab, setSelectedTab] = createSignal<Tab>("queries");
 
-export function Request() {
-  return (
-    <div class="request">
-      <UrlEditor />
-      <RequestTabs />
-    </div>
-  );
-}
-
-function RequestTabs() {
+export function RequestTabs() {
   return (
     <div class="tabs">
       <div class="tab-indicators">

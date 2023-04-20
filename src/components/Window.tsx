@@ -1,18 +1,13 @@
-import { Show } from "solid-js";
 import "./Window.css";
-import { error, response } from "../context";
-import { Request } from "./request/Request";
-import { ResponseDetails } from "./response/ResponseDetails";
+import { RequestPage } from "./request/RequestPage";
+import { ResponsePage } from "./response/ResponsePage";
 
 export default function Window() {
   return (
     <div class="container">
-      <Request />
+      <RequestPage />
       <div class="response">
-        <Show when={error()}>
-          <p>发生错误: {error()}</p>
-        </Show>
-        <ResponseDetails />
+        <ResponsePage />
       </div>
     </div>
   );
