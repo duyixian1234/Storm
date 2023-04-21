@@ -7,13 +7,13 @@ import {
   setUrl,
   url,
 } from "../../vm";
-import { RequestMethod } from "../../types";
+import { Method } from "../../types";
 
 export function UrlEditor() {
   return (
     <div class="url-editor">
       <select value={method()} onChange={setByValue(setMethod)}>
-        {Object.values(RequestMethod).map((method) => (
+        {Object.values(Method).map((method) => (
           <option value={method}>{method}</option>
         ))}
       </select>

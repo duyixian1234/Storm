@@ -2,8 +2,9 @@ import { createSignal } from "solid-js";
 import { BodyEditor } from "./BodyEditor";
 import { HeadersEditor } from "./HeadersEditor";
 import { QueriesEditor } from "./QueriesEditor";
+import { FormEditor } from "./FormEditor";
 
-type Tab = "headers" | "body" | "queries";
+type Tab = "headers" | "body" | "queries" | "form";
 
 const [selectedTab, setSelectedTab] = createSignal<Tab>("queries");
 
@@ -18,6 +19,14 @@ export function RequestTabs() {
           }}
         >
           Queries
+        </button>
+        <button
+          class={selectedTab() === "form" ? "active" : ""}
+          onClick={() => {
+            setSelectedTab("form");
+          }}
+        >
+          Form
         </button>
         <button
           class={selectedTab() === "headers" ? "active" : ""}
@@ -36,6 +45,7 @@ export function RequestTabs() {
       </div>
       <div class="tab">
         {selectedTab() === "queries" && <QueriesEditor />}
+        {selectedTab() === "form" && <FormEditor />}
         {selectedTab() === "headers" && <HeadersEditor />}
         {selectedTab() === "body" && <BodyEditor />}
       </div>

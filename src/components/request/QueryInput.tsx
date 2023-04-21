@@ -26,8 +26,8 @@ export function QueryInput(props: { query: Query; index: number }) {
   };
 
   const handleAddQuery = () => {
-    const newHeaders = [...queries(), { key: "", value: "" }];
-    setQueries(newHeaders);
+    const newQueires = [...queries(), { key: "", value: "" }];
+    setQueries(newQueires);
   };
 
   const onChange = (index: number, query: Query) => {
@@ -37,9 +37,9 @@ export function QueryInput(props: { query: Query; index: number }) {
   };
 
   const onDelete = (index: number) => {
-    const newHeaders = [...queries()];
-    newHeaders.splice(index, 1);
-    setQueries(newHeaders);
+    const newQueires = [...queries()];
+    newQueires.splice(index, 1);
+    setQueries(newQueires);
   };
 
   return (

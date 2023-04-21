@@ -86,6 +86,26 @@
 .header-input > * {
   margin-left: 5px;
 }
+
+
+.form-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item-input {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.form-item-input > * {
+  margin-left: 5px;
+}
+
 .queries-editor {
   display: flex;
   flex-direction: column;

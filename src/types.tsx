@@ -1,4 +1,4 @@
-export enum RequestMethod {
+export enum Method {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
@@ -13,6 +13,12 @@ export interface Query {
   key: string;
   value: string;
 }
+
+export interface FormItem {
+  key: string;
+  value: string;
+}
+
 export interface Response {
   status: number;
   headers: Record<string, string>;

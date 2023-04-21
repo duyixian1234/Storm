@@ -1,13 +1,16 @@
-import { Setter, createMemo, createSignal } from "solid-js";
-import { Query, Header, RequestMethod, Response } from "./types";
 import { Body, ResponseType, fetch } from "@tauri-apps/api/http";
+import { Setter, createMemo, createSignal } from "solid-js";
+import { FormItem, Header, Method, Query, Response } from "./types";
 
 export const [url, setUrl] = createSignal<string>("https://httpbin.org/get");
-export const [method, setMethod] = createSignal(RequestMethod.GET);
+export const [method, setMethod] = createSignal(Method.GET);
 export const [headers, setHeaders] = createSignal<Header[]>([
   { key: "User-Agent", value: "Storm Client" },
 ]);
 export const [queries, setQueries] = createSignal<Query[]>([
+  { key: "", value: "" },
+]);
+export const [formItems, setFormItems] = createSignal<FormItem[]>([
   { key: "", value: "" },
 ]);
 export const [body, setBody] = createSignal("");
@@ -19,36 +22,56 @@ export const defaultResponse = {
 export const [response, setResponse] = createSignal<Response>(defaultResponse);
 export const [loading, setLoading] = createSignal(false);
 export const [error, setError] = createSignal("");
-export const realUrl = createMemo(() => {
-  const queryString = toQueryString(queries());
-  if (queryString.length === 0) return url();
-  return url() + "?" + queryString;
-});
+export const [isForm, setIsForm] = createSignal(false);
 
-function toQueryString(queries: Query[]): string {
+const queryString = createMemo(() => {
   const params = new URLSearchParams();
-  queries.forEach((query) => {
+  queries().forEach((query) => {
     query.key.length > 0 && params.append(query.key, query.value);
   });
   return params.toString();
-}
+});
+
+export const realUrl = createMemo(() => {
+  if (queryString().length === 0) return url();
+  return url() + "?" + queryString();
+});
+
+const requestHeaders = createMemo(() =>
+  headers().reduce((obj, header) => {
+    if (header.key) {
+      setIsForm(true);
+      obj[header.key] = header.value;
+    }
+    return obj;
+  }, {} as Record<string, string>)
+);
+
+const requestForm = createMemo(() =>
+  Body.form(
+    formItems().reduce((obj, form) => {
+      if (form.key) {
+        obj[form.key] = form.value;
+      }
+      return obj;
+    }, {} as Record<string, string>)
+  )
+);
+
+const requestBody = createMemo(() =>
+  isForm() ? requestForm() : Body.text(body())
+);
 
 export async function doRequest() {
   setLoading(true);
   setError("");
   setResponse(defaultResponse);
-  const requestHeaders = headers().reduce((obj, header) => {
-    if (header.key) {
-      obj[header.key] = header.value;
-    }
-    return obj;
-  }, {} as Record<string, string>);
-  console.log(realUrl(), method(), requestHeaders, body());
+  console.log(realUrl(), method(), requestHeaders(), body());
   try {
     const response = await fetch<number[]>(realUrl(), {
       method: method(),
-      headers: requestHeaders,
-      body: method() === RequestMethod.GET ? undefined : Body.text(body()),
+      headers: requestHeaders(),
+      body: method() === Method.GET ? undefined : requestBody(),
       responseType: ResponseType.Binary,
     });
     setResponse({
