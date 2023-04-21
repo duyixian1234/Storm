@@ -1,6 +1,16 @@
 import { Body, ResponseType, fetch } from "@tauri-apps/api/http";
 import { Setter, createMemo, createSignal } from "solid-js";
-import { FormItem, Header, Method, Query, Response } from "./types";
+import {
+  FormItem,
+  Header,
+  Method,
+  Query,
+  RequestRecord,
+  Response,
+} from "./types";
+import * as storage from "./storage";
+
+storage.init();
 
 export const [url, setUrl] = createSignal<string>("https://httpbin.org/get");
 export const [method, setMethod] = createSignal(Method.GET);
@@ -23,6 +33,11 @@ export const [response, setResponse] = createSignal<Response>(defaultResponse);
 export const [loading, setLoading] = createSignal(false);
 export const [error, setError] = createSignal("");
 export const [isForm, setIsForm] = createSignal(false);
+export const [history, setHistory] = createSignal<RequestRecord[]>([]);
+export const [selectedRecord, setSelectedRecord] =
+  createSignal<RequestRecord>();
+
+storage.loadHistory().then(setHistory);
 
 const queryString = createMemo(() => {
   const params = new URLSearchParams();
@@ -66,7 +81,18 @@ export async function doRequest() {
   setLoading(true);
   setError("");
   setResponse(defaultResponse);
-  console.log(realUrl(), method(), requestHeaders(), body());
+  console.log(realUrl(), method(), requestHeaders(), requestForm(), body());
+  const record = {
+    method: method(),
+    url: url(),
+    headers: headers(),
+    queries: queries(),
+    formItems: formItems(),
+    body: body(),
+    ts: Date.now(),
+  };
+  await storage.appendRequestRecord(record);
+  setHistory((history) => [record, ...history.slice(0, 19)]);
   try {
     const response = await fetch<number[]>(realUrl(), {
       method: method(),
@@ -91,3 +117,14 @@ export function setByValue<T>(setter: Setter<T>) {
     setter(() => value as T);
   };
 }
+
+createMemo(() => {
+  if (!selectedRecord()) return;
+  const { method, url, headers, queries, formItems, body } = selectedRecord()!;
+  setMethod(method);
+  setUrl(url);
+  setHeaders(() => headers || []);
+  setQueries(() => queries || []);
+  setFormItems(() => formItems || []);
+  setBody(body || "");
+});

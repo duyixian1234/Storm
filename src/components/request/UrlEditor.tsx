@@ -8,6 +8,7 @@ import {
   url,
 } from "../../vm";
 import { Method } from "../../types";
+import { History } from "../history/History";
 
 export function UrlEditor() {
   return (
@@ -21,6 +22,7 @@ export function UrlEditor() {
       <button onClick={doRequest} disabled={loading()}>
         {loading() ? "Loading..." : "Send"}
       </button>
+      <History />
     </div>
   );
 }

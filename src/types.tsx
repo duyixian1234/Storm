@@ -24,3 +24,13 @@ export interface Response {
   headers: Record<string, string>;
   body: ArrayBuffer;
 }
+
+export interface RequestRecord {
+  method: Method;
+  url: string;
+  headers?: Header[];
+  queries?: Query[];
+  formItems?: FormItem[];
+  body?: string;
+  ts: number;
+}
