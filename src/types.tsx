@@ -1,12 +1,10 @@
-import { AxiosResponseHeaders, RawAxiosResponseHeaders } from "axios";
-
 export enum RequestMethod {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
   DELETE = "DELETE",
 }
-export interface RequestHeader {
+export interface Header {
   key: string;
   value: string;
 }

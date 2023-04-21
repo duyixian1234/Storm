@@ -1,18 +1,14 @@
-import { body, setBody } from "../../context";
+import { body, setBody, setByValue } from "../../vm";
 import "./request.css";
 
 export function BodyEditor() {
-  const handleBodyChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    setBody(value);
-  };
-
   return (
     <div>
-      <textarea class="body-input" value={body()} onInput={handleBodyChange} />
+      <textarea
+        class="body-input"
+        value={body()}
+        onInput={setByValue(setBody)}
+      />
     </div>
   );
 }

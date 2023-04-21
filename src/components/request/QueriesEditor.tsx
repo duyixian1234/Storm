@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { queries } from "../../context";
+import { queries } from "../../vm";
 import "./request.css";
 import { QueryInput } from "./QueryInput";
 

@@ -1,4 +1,4 @@
-import { queries, setQueries } from "../../context";
+import { queries, setQueries } from "../../vm";
 import { Query } from "../../types";
 import "./request.css";
 

@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { headers } from "../../context";
+import { headers } from "../../vm";
 import { HeaderInput } from "./HeaderInput";
 import "./request.css";
 

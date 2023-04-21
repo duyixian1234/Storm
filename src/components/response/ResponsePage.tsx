@@ -1,4 +1,4 @@
-import { error, response } from "../../context";
+import { error, response } from "../../vm";
 import "./response.css";
 
 import { Show } from "solid-js";

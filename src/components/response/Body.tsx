@@ -1,5 +1,5 @@
 import { Base64 } from "js-base64";
-import { realUrl, response } from "../../context";
+import { realUrl, response } from "../../vm";
 import { Match, Switch, createMemo } from "solid-js";
 
 const textTypes = new Set([

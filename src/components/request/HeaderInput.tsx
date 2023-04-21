@@ -1,8 +1,8 @@
-import { headers, setHeaders } from "../../context";
-import { RequestHeader } from "../../types";
+import { headers, setHeaders } from "../../vm";
+import { Header } from "../../types";
 import "./request.css";
 
-export function HeaderInput(props: { header: RequestHeader; index: number }) {
+export function HeaderInput(props: { header: Header; index: number }) {
   const { header, index } = props;
 
   const handleKeyChange = ({
@@ -30,7 +30,7 @@ export function HeaderInput(props: { header: RequestHeader; index: number }) {
     setHeaders(newHeaders);
   };
 
-  const onChange = (index: number, header: RequestHeader) => {
+  const onChange = (index: number, header: Header) => {
     const newHeaders = [...headers()];
     newHeaders[index] = header;
     setHeaders(newHeaders);
