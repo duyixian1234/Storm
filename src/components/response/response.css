@@ -55,6 +55,23 @@
   max-height: 1000px;
 }
 
+.response-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.copy-button {
+  width: fit-content;
+}
+
+.response pre {
+  background-color: antiquewhite;
+  text-align: start;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 @media (max-width: 1024px) {
   .response {
     width: 80vw;

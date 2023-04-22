@@ -128,3 +128,7 @@ createMemo(() => {
   setFormItems(() => formItems || []);
   setBody(body || "");
 });
+
+export const contentType = createMemo(
+  () => response().headers["content-type"]?.toString() || ""
+);

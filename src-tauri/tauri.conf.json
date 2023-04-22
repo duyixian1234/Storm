@@ -25,6 +25,9 @@
       "fs": {
         "all": true,
         "scope": ["$HOME/**"]
+      },
+      "clipboard": {
+        "all": true
       }
     },
     "bundle": {

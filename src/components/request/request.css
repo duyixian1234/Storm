@@ -50,7 +50,6 @@
 
 .request .tab-indicators button.active {
   border-bottom: 2px solid #555;
-  margin-left: 1.5vw;
 }
 
 .request .tab {

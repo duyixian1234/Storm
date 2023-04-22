@@ -1,6 +1,7 @@
 import { Base64 } from "js-base64";
-import { realUrl, response } from "../../vm";
-import { Match, Switch, createMemo } from "solid-js";
+import { contentType, realUrl, response } from "../../vm";
+import { Match, Switch } from "solid-js";
+import { copyToClipboard } from "../../utils/clipboard";
 
 const textTypes = new Set([
   "text/plain",
@@ -34,16 +35,23 @@ const binaryTypes = new Set([
 ]);
 
 export function Body() {
-  const contentType = createMemo(
-    () => response().headers["content-type"]?.toString() || ""
-  );
   return (
     <div>
       <Switch>
         <Match when={textTypes.has(contentType())}>
-          <pre>
-            <code>{new TextDecoder().decode(response().body)}</code>
-          </pre>
+          <div class="response-text">
+            <button
+              class="copy-button"
+              onClick={() => {
+                copyToClipboard(new TextDecoder().decode(response().body));
+              }}
+            >
+              Copy To Clipboard
+            </button>
+            <pre>
+              <code>{new TextDecoder().decode(response().body)}</code>
+            </pre>
+          </div>
         </Match>
         <Match when={imageTypes.has(contentType())}>
           <img
