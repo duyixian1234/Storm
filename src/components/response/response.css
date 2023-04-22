@@ -72,6 +72,12 @@
   word-wrap: break-word;
 }
 
+.response headers{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
 @media (max-width: 1024px) {
   .response {
     width: 80vw;
