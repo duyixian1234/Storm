@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "storm",
-    "version": "0.4.0"
+    "version": "0.4.1"
   },
   "tauri": {
     "allowlist": {
@@ -24,7 +24,11 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$HOME/**"]
+        "scope": [
+          "$HOME/.storm",
+          "$HOME/.storm/history",
+          "$HOME/.storm/history/history.json"
+        ]
       },
       "clipboard": {
         "all": true
