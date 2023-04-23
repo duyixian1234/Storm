@@ -23,6 +23,7 @@ export interface Response {
   status: number;
   headers: Record<string, string>;
   body: ArrayBuffer;
+  time: number;
 }
 
 export interface RequestRecord {

@@ -1,7 +1,6 @@
 import { createSignal } from "solid-js";
 import { Headers } from "./Headers";
 import { Body } from "./Body";
-import { StatusCode } from "./StatusCode";
 
 type Tab = "headers" | "body" | "status";
 
@@ -27,19 +26,10 @@ export function ResponseTabs() {
         >
           Headers
         </button>
-        <button
-          class={selectedTab() === "status" ? "active" : ""}
-          onClick={() => {
-            setSelectedTab("status");
-          }}
-        >
-          Status
-        </button>
       </div>
       <div class="tab">
         {selectedTab() === "body" && <Body />}
         {selectedTab() === "headers" && <Headers />}
-        {selectedTab() === "status" && <StatusCode />}
       </div>
     </div>
   );

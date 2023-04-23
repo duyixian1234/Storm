@@ -3,6 +3,7 @@ import "./response.css";
 
 import { Show } from "solid-js";
 import { ResponseTabs } from "./ResponseTabs";
+import { ResponseBrief } from "./ResponBrief";
 
 export function ResponsePage() {
   return (
@@ -11,6 +12,7 @@ export function ResponsePage() {
         <p>Error: {error()}</p>
       </Show>
       <Show when={response()} fallback={<div></div>}>
+        <ResponseBrief />
         <ResponseTabs />
       </Show>
     </div>

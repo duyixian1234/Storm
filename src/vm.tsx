@@ -28,6 +28,7 @@ export const defaultResponse = {
   status: 0,
   headers: {},
   body: new ArrayBuffer(0),
+  time: 0,
 };
 export const [response, setResponse] = createSignal<Response>(defaultResponse);
 export const [loading, setLoading] = createSignal(false);
@@ -94,6 +95,7 @@ export async function doRequest() {
   await storage.appendRequestRecord(record);
   setHistory((history) => [record, ...history.slice(0, 19)]);
   try {
+    const start = Date.now();
     const response = await fetch<number[]>(realUrl(), {
       method: method(),
       headers: requestHeaders(),
@@ -104,6 +106,7 @@ export async function doRequest() {
       status: response.status,
       headers: response.headers,
       body: new Uint8Array(response.data).buffer,
+      time: Date.now() - start,
     });
   } catch (error) {
     setError((error as any).toString());
@@ -132,3 +135,5 @@ createMemo(() => {
 export const contentType = createMemo(
   () => response().headers["content-type"]?.toString() || ""
 );
+
+export const requested = createMemo(() => response().status > 0);

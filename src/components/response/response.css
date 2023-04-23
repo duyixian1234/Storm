@@ -72,10 +72,23 @@
   word-wrap: break-word;
 }
 
-.response headers{
+.response headers {
   display: flex;
   flex-direction: column;
   justify-content: left;
+}
+
+.response-breif {
+  text-align: left;
+  margin-left: 1.5vw;
+}
+
+.response-breif p {
+  font-weight: bold;
+}
+
+.response span {
+  color: rgb(3, 207, 139);
 }
 
 @media (max-width: 1024px) {
