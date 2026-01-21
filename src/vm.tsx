@@ -1,5 +1,5 @@
 import { fetch } from "@tauri-apps/plugin-http";
-import { Setter, createMemo, createSignal } from "solid-js";
+import { Setter, createMemo, createSignal, createEffect } from "solid-js";
 import {
   FormItem,
   Header,
@@ -54,26 +54,25 @@ export const realUrl = createMemo(() => {
 });
 
 const requestHeaders = createMemo(() =>
-  headers().reduce((obj, header) => {
-    if (header.key) {
-      setIsForm(true);
-      obj[header.key] = header.value;
-    }
-    return obj;
-  }, {} as Record<string, string>)
+  headers().reduce(
+    (obj, header) => {
+      if (header.key) {
+        obj[header.key] = header.value;
+      }
+      return obj;
+    },
+    {} as Record<string, string>,
+  ),
 );
 
 const requestForm = createMemo(() => {
-  const data = formItems().reduce((obj, form) => {
+  const fd = new FormData();
+  formItems().forEach((form) => {
     if (form.key) {
-      obj[form.key] = form.value;
+      fd.append(form.key, form.value);
     }
-    return obj;
-  }, {} as Record<string, string>);
-  return new FormData(Object.entries(data).reduce((fd, [k, v]) => {
-    fd.append(k, v);
-    return fd;
-  }, new FormData()));
+  });
+  return fd;
 });
 
 const requestBody = createMemo(() => (isForm() ? requestForm() : body()));
@@ -121,7 +120,7 @@ export function setByValue<T>(setter: Setter<T>) {
   };
 }
 
-createMemo(() => {
+createEffect(() => {
   if (!selectedRecord()) return;
   const { method, url, headers, queries, formItems, body } = selectedRecord()!;
   setMethod(method);

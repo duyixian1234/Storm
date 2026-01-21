@@ -30,20 +30,5 @@
       "icons/icon.ico"
     ]
   },
-  "plugins": {
-    "shell": {
-      "open": true
-    },
-    "http": {
-      "scope": ["http://**", "https://**"]
-    },
-    "fs": {
-      "scope": [
-        "$HOME/.storm",
-        "$HOME/.storm/history",
-        "$HOME/.storm/history/history.json"
-      ]
-    },
-    "clipboard-manager": {}
-  }
+  "plugins": {}
 }
