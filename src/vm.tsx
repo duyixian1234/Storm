@@ -1,4 +1,4 @@
-import { Body, ResponseType, fetch } from "@tauri-apps/api/http";
+import { fetch } from "@tauri-apps/plugin-http";
 import { Setter, createMemo, createSignal } from "solid-js";
 import {
   FormItem,
@@ -63,20 +63,20 @@ const requestHeaders = createMemo(() =>
   }, {} as Record<string, string>)
 );
 
-const requestForm = createMemo(() =>
-  Body.form(
-    formItems().reduce((obj, form) => {
-      if (form.key) {
-        obj[form.key] = form.value;
-      }
-      return obj;
-    }, {} as Record<string, string>)
-  )
-);
+const requestForm = createMemo(() => {
+  const data = formItems().reduce((obj, form) => {
+    if (form.key) {
+      obj[form.key] = form.value;
+    }
+    return obj;
+  }, {} as Record<string, string>);
+  return new FormData(Object.entries(data).reduce((fd, [k, v]) => {
+    fd.append(k, v);
+    return fd;
+  }, new FormData()));
+});
 
-const requestBody = createMemo(() =>
-  isForm() ? requestForm() : Body.text(body())
-);
+const requestBody = createMemo(() => (isForm() ? requestForm() : body()));
 
 export async function doRequest() {
   setLoading(true);
@@ -96,16 +96,16 @@ export async function doRequest() {
   setHistory((history) => [record, ...history.slice(0, 19)]);
   try {
     const start = Date.now();
-    const response = await fetch<number[]>(realUrl(), {
+    const response = await fetch(realUrl(), {
       method: method(),
       headers: requestHeaders(),
-      body: method() === Method.GET ? undefined : requestBody(),
-      responseType: ResponseType.Binary,
-    });
+      body: method() === Method.GET ? undefined : (requestBody() as any),
+    } as any);
+    const arrayBuffer = await response.arrayBuffer();
     setResponse({
       status: response.status,
-      headers: response.headers,
-      body: new Uint8Array(response.data).buffer,
+      headers: Object.fromEntries(response.headers?.entries?.() ?? []),
+      body: arrayBuffer,
       time: Date.now() - start,
     });
   } catch (error) {

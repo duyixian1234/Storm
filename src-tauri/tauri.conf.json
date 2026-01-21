@@ -1,65 +1,49 @@
 {
+  "productName": "storm",
+  "version": "0.5.0",
+  "identifier": "cn.duyixian.www",
   "build": {
     "beforeDevCommand": "yarn dev",
     "beforeBuildCommand": "yarn build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist",
-    "withGlobalTauri": false
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "storm",
-    "version": "0.5.0"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "http": {
-        "all": true,
-        "request": true,
-        "scope": ["http://**", "https://**"]
-      },
-      "fs": {
-        "all": true,
-        "scope": [
-          "$HOME/.storm",
-          "$HOME/.storm/history",
-          "$HOME/.storm/history/history.json"
-        ]
-      },
-      "clipboard": {
-        "all": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "cn.duyixian.www",
-      "targets": "all"
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
+  "app": {
     "windows": [
       {
-        "fullscreen": false,
-        "resizable": true,
         "title": "Storm Client",
         "width": 1024,
-        "height": 768
+        "height": 768,
+        "resizable": true,
+        "fullscreen": false
       }
     ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {
+    "shell": {
+      "open": true
+    },
+    "http": {
+      "scope": ["http://**", "https://**"]
+    },
+    "fs": {
+      "scope": [
+        "$HOME/.storm",
+        "$HOME/.storm/history",
+        "$HOME/.storm/history/history.json"
+      ]
+    },
+    "clipboard-manager": {}
   }
 }

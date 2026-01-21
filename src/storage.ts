@@ -1,10 +1,10 @@
 import {
-  createDir,
+  mkdir,
   exists,
   writeTextFile,
   readTextFile,
   BaseDirectory,
-} from "@tauri-apps/api/fs";
+} from "@tauri-apps/plugin-fs";
 import { RequestRecord } from "./types";
 
 export async function init() {
@@ -13,7 +13,7 @@ export async function init() {
   });
   if (!appDirExists) {
     console.log("Creating $HOME/.storm/ directory");
-    await createDir(".storm", {
+    await mkdir(".storm", {
       dir: BaseDirectory.Home,
       recursive: true,
     });
@@ -23,7 +23,7 @@ export async function init() {
   });
   if (!historyDirExists) {
     console.log("Creating $HOME/.storm/history/ directory");
-    await createDir(".storm/history", {
+    await mkdir(".storm/history", {
       dir: BaseDirectory.Home,
       recursive: true,
     });
