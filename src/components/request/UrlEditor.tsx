@@ -23,7 +23,7 @@ export function UrlEditor() {
         ))}
       </select>
       <input
-        class="flex-1 h-10 px-3 bg-white border border-gray-300 rounded-md text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+        class="flex-1 min-w-0 h-10 px-3 bg-white border border-gray-300 rounded-md text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
         type="text"
         value={url()}
         onInput={setByValue(setUrl)}

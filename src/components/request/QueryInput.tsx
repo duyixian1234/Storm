@@ -44,7 +44,7 @@ export function QueryInput(props: { query: Query; index: number }) {
   return (
     <div class="flex items-center gap-3 mb-3 p-2 bg-white rounded-md border border-gray-100 shadow-sm transition-all hover:border-gray-200">
       <input
-        class="flex-1 h-9 px-3 bg-gray-50/50 border border-gray-200 rounded text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+        class="flex-1 min-w-0 h-9 px-3 bg-gray-50/50 border border-gray-200 rounded text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
         type="text"
         value={query.key}
         onInput={handleKeyChange}
@@ -52,7 +52,7 @@ export function QueryInput(props: { query: Query; index: number }) {
       />
       <div class="w-px h-6 bg-gray-200" />
       <input
-        class="flex-1 h-9 px-3 bg-gray-50/50 border border-gray-200 rounded text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+        class="flex-1 min-w-0 h-9 px-3 bg-gray-50/50 border border-gray-200 rounded text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
         type="text"
         value={query.value}
         onInput={handleValueChange}

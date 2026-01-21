@@ -10,7 +10,7 @@ const [selectedTab, setSelectedTab] = createSignal<Tab>("queries");
 
 export function RequestTabs() {
   return (
-    <div class="flex flex-col mt-2">
+    <div class="flex-1 flex flex-col mt-2 min-h-0">
       <div class="flex justify-start px-4 space-x-4 border-b border-gray-100">
         <button
           class={`pb-2 px-1 text-sm font-medium transition-colors ${
@@ -59,7 +59,7 @@ export function RequestTabs() {
           Body
         </button>
       </div>
-      <div class="p-4 h-[80vh] overflow-auto bg-gray-50/20">
+      <div class="p-4 flex-1 overflow-auto bg-gray-50/20">
         {selectedTab() === "queries" && <QueriesEditor />}
         {selectedTab() === "form" && <FormEditor />}
         {selectedTab() === "headers" && <HeadersEditor />}

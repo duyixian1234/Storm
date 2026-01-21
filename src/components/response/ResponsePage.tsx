@@ -6,7 +6,7 @@ import { ResponseBrief } from "./ResponBrief";
 
 export function ResponsePage() {
   return (
-    <div class="flex flex-col mx-[0.5vw] w-[80vw] lg:w-[48vw] border border-gray-300 rounded-[0.5vw] bg-white shadow-sm overflow-hidden">
+    <div class="flex-1 flex flex-col min-w-0 border border-gray-300 rounded-lg bg-white shadow-sm overflow-hidden">
       <Show when={error()}>
         <div class="p-4 bg-red-50 text-red-600 border-b border-red-100">
           <p class="font-medium">Error: {error()}</p>

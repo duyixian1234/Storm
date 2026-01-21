@@ -2,7 +2,7 @@ import { requested, response } from "../../vm";
 
 export function ResponseBrief() {
   return (
-    <div class="text-left ml-[1.5vw] py-2 border-b border-gray-100">
+    <div class="text-left px-4 py-3 border-b border-gray-100">
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider flex gap-4">
         <span>
           Status:{" "}
