@@ -1,6 +1,6 @@
 {
   "productName": "storm",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "identifier": "cn.duyixian.www",
   "build": {
     "beforeDevCommand": "yarn dev",
