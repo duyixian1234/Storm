@@ -38,7 +38,14 @@ export function Body() {
   return (
     <div>
       <Switch>
-        <Match when={textTypes.has(contentType())}>
+        <Match
+          when={
+            textTypes.has(contentType()) ||
+            contentType().includes("json") ||
+            contentType().includes("xml") ||
+            contentType().startsWith("text/")
+          }
+        >
           <div class="response-text">
             <button
               class="copy-button"
@@ -57,7 +64,7 @@ export function Body() {
           <img
             class="response-image"
             src={`data:${contentType()};base64, ${Base64.fromUint8Array(
-              new Uint8Array(response().body)
+              new Uint8Array(response().body),
             )}`}
           />
         </Match>
@@ -76,7 +83,7 @@ export function Body() {
         <Match when={binaryTypes.has(contentType())}>
           <a
             href={`data:${contentType()};base64, ${Base64.fromUint8Array(
-              new Uint8Array(response().body)
+              new Uint8Array(response().body),
             )}`}
             download="file"
           >

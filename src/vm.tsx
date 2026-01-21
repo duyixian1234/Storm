@@ -50,7 +50,8 @@ const queryString = createMemo(() => {
 
 export const realUrl = createMemo(() => {
   if (queryString().length === 0) return url();
-  return url() + "?" + queryString();
+  const separator = url().includes("?") ? "&" : "?";
+  return url() + separator + queryString();
 });
 
 const requestHeaders = createMemo(() =>
@@ -78,12 +79,27 @@ const requestForm = createMemo(() => {
 const requestBody = createMemo(() => (isForm() ? requestForm() : body()));
 
 export async function doRequest() {
+  const currentUrl = realUrl();
+  if (
+    !currentUrl ||
+    (!currentUrl.startsWith("http://") && !currentUrl.startsWith("https://"))
+  ) {
+    setError("Invalid URL: URL must start with http:// or https://");
+    return;
+  }
+
   setLoading(true);
   setError("");
   setResponse(defaultResponse);
-  console.log(realUrl(), method(), requestHeaders(), requestForm(), body());
+
+  const currentMethod = method();
+  const currentHeaders = requestHeaders();
+  const currentBody = requestBody();
+
+  console.log("Doing request:", currentUrl, currentMethod, currentHeaders);
+
   const record = {
-    method: method(),
+    method: currentMethod,
     url: url(),
     headers: headers(),
     queries: queries(),
@@ -91,26 +107,47 @@ export async function doRequest() {
     body: body(),
     ts: Date.now(),
   };
-  await storage.appendRequestRecord(record);
-  setHistory((history) => [record, ...history.slice(0, 19)]);
+
+  // Dont await history saving to avoid blocking the request
+  storage
+    .appendRequestRecord(record)
+    .then(() => {
+      setHistory((history) => [record, ...history.slice(0, 19)]);
+    })
+    .catch((e) => console.error("Failed to save history", e));
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30000);
+
   try {
     const start = Date.now();
-    const response = await fetch(realUrl(), {
-      method: method(),
-      headers: requestHeaders(),
-      body: method() === Method.GET ? undefined : (requestBody() as any),
+    const fetchResponse = await fetch(currentUrl, {
+      method: currentMethod,
+      headers: currentHeaders,
+      body: currentMethod === Method.GET ? undefined : (currentBody as any),
+      signal: controller.signal,
     } as any);
-    const arrayBuffer = await response.arrayBuffer();
+
+    console.log("Response status:", fetchResponse.status);
+    const arrayBuffer = await fetchResponse.arrayBuffer();
+    clearTimeout(timeoutId);
+
     setResponse({
-      status: response.status,
-      headers: Object.fromEntries(response.headers?.entries?.() ?? []),
+      status: fetchResponse.status,
+      headers: Object.fromEntries(fetchResponse.headers?.entries?.() ?? []),
       body: arrayBuffer,
       time: Date.now() - start,
     });
-  } catch (error) {
-    setError((error as any).toString());
+  } catch (err) {
+    console.error("Request error:", err);
+    if ((err as any).name === "AbortError") {
+      setError("Request timed out (30s)");
+    } else {
+      setError((err as any).toString());
+    }
   } finally {
     setLoading(false);
+    clearTimeout(timeoutId);
   }
 }
 
@@ -132,7 +169,12 @@ createEffect(() => {
 });
 
 export const contentType = createMemo(
-  () => response().headers["content-type"]?.toString() || ""
+  () =>
+    response()
+      .headers["content-type"]?.toString()
+      .split(";")[0]
+      ?.trim()
+      .toLowerCase() || "",
 );
 
 export const requested = createMemo(() => response().status > 0);
