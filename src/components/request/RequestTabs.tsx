@@ -10,10 +10,14 @@ const [selectedTab, setSelectedTab] = createSignal<Tab>("queries");
 
 export function RequestTabs() {
   return (
-    <div class="tabs">
-      <div class="tab-indicators">
+    <div class="flex flex-col mt-2">
+      <div class="flex justify-start px-4 space-x-4 border-b border-gray-100">
         <button
-          class={selectedTab() === "queries" ? "active" : ""}
+          class={`pb-2 px-1 text-sm font-medium transition-colors ${
+            selectedTab() === "queries"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
           onClick={() => {
             setSelectedTab("queries");
           }}
@@ -21,7 +25,11 @@ export function RequestTabs() {
           Queries
         </button>
         <button
-          class={selectedTab() === "form" ? "active" : ""}
+          class={`pb-2 px-1 text-sm font-medium transition-colors ${
+            selectedTab() === "form"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
           onClick={() => {
             setSelectedTab("form");
           }}
@@ -29,7 +37,11 @@ export function RequestTabs() {
           Form
         </button>
         <button
-          class={selectedTab() === "headers" ? "active" : ""}
+          class={`pb-2 px-1 text-sm font-medium transition-colors ${
+            selectedTab() === "headers"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
           onClick={() => {
             setSelectedTab("headers");
           }}
@@ -37,13 +49,17 @@ export function RequestTabs() {
           Headers
         </button>
         <button
-          class={selectedTab() === "body" ? "active" : ""}
+          class={`pb-2 px-1 text-sm font-medium transition-colors ${
+            selectedTab() === "body"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
           onClick={() => setSelectedTab("body")}
         >
           Body
         </button>
       </div>
-      <div class="tab">
+      <div class="p-4 h-[80vh] overflow-auto bg-gray-50/20">
         {selectedTab() === "queries" && <QueriesEditor />}
         {selectedTab() === "form" && <FormEditor />}
         {selectedTab() === "headers" && <HeadersEditor />}

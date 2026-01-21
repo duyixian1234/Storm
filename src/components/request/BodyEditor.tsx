@@ -1,13 +1,13 @@
 import { body, setBody, setByValue } from "../../vm";
-import "./request.css";
 
 export function BodyEditor() {
   return (
-    <div>
+    <div class="h-full">
       <textarea
-        class="body-input"
+        class="w-full h-[70vh] p-4 bg-white border border-gray-300 rounded-lg shadow-sm font-mono text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
         value={body()}
         onInput={setByValue(setBody)}
+        placeholder="Request body (JSON, text, etc.)..."
       />
     </div>
   );
