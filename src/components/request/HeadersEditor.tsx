@@ -1,11 +1,13 @@
 import { For } from "solid-js";
-import { headers } from "../../vm";
+import { useStorm } from "../../vm";
 import { HeaderInput } from "./HeaderInput";
 
 export function HeadersEditor() {
+  const [state] = useStorm();
+
   return (
     <div class="flex flex-col">
-      <For each={headers()}>
+      <For each={state.headers}>
         {(header, index) =>
           header && <HeaderInput header={header} index={index()} />
         }

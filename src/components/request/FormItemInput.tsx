@@ -1,44 +1,24 @@
-import { formItems, setFormItems } from "../../vm";
+import { useStorm } from "../../vm";
 import { FormItem } from "../../types";
 
 export function FormItemInput(props: { formItem: FormItem; index: number }) {
+  const [state, actions] = useStorm();
   const { formItem: formitem, index } = props;
 
-  const handleKeyChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    onChange(index, { key: value, value: formitem.value });
+  const handleKeyChange = (e: { target: { value: string } }) => {
+    actions.updateFormItem(index, "key", e.target.value);
   };
 
-  const handleValueChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    onChange(index, { key: formitem.key, value });
+  const handleValueChange = (e: { target: { value: string } }) => {
+    actions.updateFormItem(index, "value", e.target.value);
   };
 
   const handleDelete = () => {
-    onDelete(index);
+    actions.removeFormItem(index);
   };
 
-  const handleAddQuery = () => {
-    const newFormItems = [...formItems(), { key: "", value: "" }];
-    setFormItems(newFormItems);
-  };
-
-  const onChange = (index: number, formitem: FormItem) => {
-    const newFormItems = [...formItems()];
-    newFormItems[index] = formitem;
-    setFormItems(newFormItems);
-  };
-
-  const onDelete = (index: number) => {
-    const newFormItems = [...formItems()];
-    newFormItems.splice(index, 1);
-    setFormItems(newFormItems);
+  const handleAddFormItem = () => {
+    actions.addFormItem();
   };
 
   return (
@@ -65,10 +45,10 @@ export function FormItemInput(props: { formItem: FormItem; index: number }) {
         >
           Del
         </button>
-        {index == formItems().length - 1 && (
+        {index === state.formItems.length - 1 && (
           <button
             class="h-9 px-4 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded transition-colors shadow-sm"
-            onClick={handleAddQuery}
+            onClick={handleAddFormItem}
           >
             Add
           </button>

@@ -1,44 +1,24 @@
-import { headers, setHeaders } from "../../vm";
+import { useStorm } from "../../vm";
 import { Header } from "../../types";
 
 export function HeaderInput(props: { header: Header; index: number }) {
+  const [state, actions] = useStorm();
   const { header, index } = props;
 
-  const handleKeyChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    onChange(index, { key: value, value: header.value });
+  const handleKeyChange = (e: { target: { value: string } }) => {
+    actions.updateHeader(index, "key", e.target.value);
   };
 
-  const handleValueChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    onChange(index, { key: header.key, value });
+  const handleValueChange = (e: { target: { value: string } }) => {
+    actions.updateHeader(index, "value", e.target.value);
   };
 
   const handleDelete = () => {
-    onDelete(index);
+    actions.removeHeader(index);
   };
 
   const handleAddHeader = () => {
-    const newHeaders = [...headers(), { key: "", value: "" }];
-    setHeaders(newHeaders);
-  };
-
-  const onChange = (index: number, header: Header) => {
-    const newHeaders = [...headers()];
-    newHeaders[index] = header;
-    setHeaders(newHeaders);
-  };
-
-  const onDelete = (index: number) => {
-    const newHeaders = [...headers()];
-    newHeaders.splice(index, 1);
-    setHeaders(newHeaders);
+    actions.addHeader();
   };
 
   return (
@@ -65,7 +45,7 @@ export function HeaderInput(props: { header: Header; index: number }) {
         >
           Del
         </button>
-        {index == headers().length - 1 && (
+        {index === state.headers.length - 1 && (
           <button
             class="h-9 px-4 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded transition-colors shadow-sm"
             onClick={handleAddHeader}

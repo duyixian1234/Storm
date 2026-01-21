@@ -3,12 +3,14 @@ import { BodyEditor } from "./BodyEditor";
 import { HeadersEditor } from "./HeadersEditor";
 import { QueriesEditor } from "./QueriesEditor";
 import { FormEditor } from "./FormEditor";
+import { useStorm } from "../../vm";
 
 type Tab = "headers" | "body" | "queries" | "form";
 
 const [selectedTab, setSelectedTab] = createSignal<Tab>("queries");
 
 export function RequestTabs() {
+  const [, actions] = useStorm();
   return (
     <div class="flex-1 flex flex-col mt-2 min-h-0">
       <div class="flex justify-start px-4 space-x-4 border-b border-gray-100">
@@ -32,6 +34,7 @@ export function RequestTabs() {
           }`}
           onClick={() => {
             setSelectedTab("form");
+            actions.setIsForm(true);
           }}
         >
           Form
@@ -54,7 +57,10 @@ export function RequestTabs() {
               ? "border-b-2 border-blue-500 text-blue-600"
               : "text-gray-500 hover:text-gray-700"
           }`}
-          onClick={() => setSelectedTab("body")}
+          onClick={() => {
+            setSelectedTab("body");
+            actions.setIsForm(false);
+          }}
         >
           Body
         </button>

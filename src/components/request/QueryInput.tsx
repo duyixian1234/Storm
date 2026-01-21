@@ -1,44 +1,24 @@
-import { queries, setQueries } from "../../vm";
+import { useStorm } from "../../vm";
 import { Query } from "../../types";
 
 export function QueryInput(props: { query: Query; index: number }) {
+  const [state, actions] = useStorm();
   const { query, index } = props;
 
-  const handleKeyChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    onChange(index, { key: value, value: query.value });
+  const handleKeyChange = (e: { target: { value: string } }) => {
+    actions.updateQuery(index, "key", e.target.value);
   };
 
-  const handleValueChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    onChange(index, { key: query.key, value });
+  const handleValueChange = (e: { target: { value: string } }) => {
+    actions.updateQuery(index, "value", e.target.value);
   };
 
   const handleDelete = () => {
-    onDelete(index);
+    actions.removeQuery(index);
   };
 
   const handleAddQuery = () => {
-    const newQueires = [...queries(), { key: "", value: "" }];
-    setQueries(newQueires);
-  };
-
-  const onChange = (index: number, query: Query) => {
-    const newQueries = [...queries()];
-    newQueries[index] = query;
-    setQueries(newQueries);
-  };
-
-  const onDelete = (index: number) => {
-    const newQueires = [...queries()];
-    newQueires.splice(index, 1);
-    setQueries(newQueires);
+    actions.addQuery();
   };
 
   return (
@@ -65,7 +45,7 @@ export function QueryInput(props: { query: Query; index: number }) {
         >
           Del
         </button>
-        {index == queries().length - 1 && (
+        {index === state.queries.length - 1 && (
           <button
             class="h-9 px-4 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded transition-colors shadow-sm"
             onClick={handleAddQuery}
